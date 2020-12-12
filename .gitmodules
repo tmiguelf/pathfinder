@@ -1,0 +1,20 @@
+[submodule "submodules/quickMSBuild"]
+	path = submodules/quickMSBuild
+	url = ../quickMSBuild.git
+	ignore = dirty
+[submodule "submodules/utilities"]
+	path = submodules/utilities
+	url = ../utilities.git
+	ignore = dirty
+[submodule "submodules/SCEF"]
+	path = submodules/SCEF
+	url = ../SCEF.git
+	ignore = dirty
+[submodule "submodules/Logger"]
+	path = submodules/Logger
+	url = ../Logger.git
+	ignore = dirty
+[submodule "submodules/googletest"]
+	path = submodules/googletest
+	url = https://github.com/tmiguelf/googletest.git
+	ignore = dirty

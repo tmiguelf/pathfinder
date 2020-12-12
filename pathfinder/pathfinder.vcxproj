@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{29c53dbe-0e88-4b00-82f3-3dd88d0fb128}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WSL_Debug|x64">
+      <Configuration>WSL_Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="WSL_Release|x64">
+      <Configuration>WSL_Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="quickMSBuild" Condition="'$(Configuration)'=='Debug'">
+    <PlatformToolset>v142</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Label="quickMSBuild" Condition="'$(Configuration)'=='Release'">
+    <PlatformToolset>v142</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Label="quickMSBuild" Condition="'$(Configuration)'=='WSL_Debug'">
+    <PlatformToolset>WSL_1_0</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Label="quickMSBuild" Condition="'$(Configuration)'=='WSL_Release'">
+    <PlatformToolset>WSL_1_0</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(SolutionDir)locations.props" />
+    <Import Project="$(quickMSBuildPath)default.cpp.props" />
+    <Import Project="$(versionPath)version.include.props" />
+    <Import Project="$(LoggerPath)Logger.include.props" />
+    <Import Project="$(SCEFPath)SCEF.import.props" />
+    <Import Project="$(CoreLibPath)CoreLib.import.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_pathfinder_EXPORTS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\pathfinder.cpp" />
+    <ClCompile Include="src\pathfinder_prelog_store.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\pathfinder\pathfinder.hpp" />
+    <ClInclude Include="include\pathfinder\pathfinder_api.h" />
+    <ClInclude Include="include\pathfinder\pathfinder_prelog_proxy.hpp" />
+    <ClInclude Include="include\pathfinder\pathfinder_prelog_store.hpp" />
+    <ClInclude Include="include\pathfinder\pathfinder_service.hpp" />
+    <ClInclude Include="resources\versionSpecific.h" />
+    <ClInclude Include="src\log_assist.hpp" />
+    <ClInclude Include="src\pathfinder_p.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\dllVersion.rc">
+      <ExcludedFromBuild Condition="'TargetOS'!='Windows'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pathfinder.import.props" />
+    <None Include="pathfinder.include.props" />
+  </ItemGroup>
+  <Import Project="$(quickMSBuildPath)default.cpp.targets" />
+</Project>
