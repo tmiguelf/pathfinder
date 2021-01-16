@@ -104,8 +104,6 @@ static void format_SCEF_error(const scef::Error_Context& p_context, logger::_p::
 		return;
 	}
 
-	p_stream << "Column " << p_context.column() << ": ";
-
 	switch(p_context.error_code())
 	{
 		case scef::Error::Unable2Read:
@@ -167,7 +165,7 @@ static scef::warningBehaviour SCEF_warning_callback(const scef::Error_Context& p
 		logger::_p::LogStreamer t_stream;
 		format_SCEF_error(p_error, t_stream);
 
-		log_context.logProxy.push2log(log_context.fileName, static_cast<uint32_t>(p_error.line()), logger::Level::Warning, t_stream.stream().str());
+		log_context.logProxy.push2log(log_context.fileName, static_cast<uint32_t>(p_error.line()), static_cast<uint32_t>(p_error.column()), logger::Level::Warning, t_stream.stream().str());
 	}
 
 	return scef::warningBehaviour::Default;
@@ -177,7 +175,6 @@ static scef::warningBehaviour SCEF_warning_callback(const scef::Error_Context& p
 static void WarnUnusedSCEFitem(Log_proxy& p_logProxy, core::os_string_view p_file, const scef::item& p_item)
 {
 	logger::_p::LogStreamer t_stream;
-	t_stream << "Column " << p_item.column() << ". ";
 	switch(p_item.type())
 	{
 		case scef::ItemType::singlet:
@@ -206,7 +203,7 @@ static void WarnUnusedSCEFitem(Log_proxy& p_logProxy, core::os_string_view p_fil
 			break;
 	}
 
-	p_logProxy.push2log(p_file, static_cast<uint32_t>(p_item.line()), logger::Level::Warning, t_stream.stream().str());
+	p_logProxy.push2log(p_file, static_cast<uint32_t>(p_item.line()), static_cast<uint32_t>(p_item.column()), logger::Level::Warning, t_stream.stream().str());
 }
 
 static bool validateKey(std::u32string_view p_key)
@@ -239,7 +236,7 @@ bool PathFinder::load(const std::filesystem::path& p_fileName, Log_proxy& p_logP
 	{
 		logger::_p::LogStreamer t_stream;
 		t_stream << "Unable to convert path \"" << p_fileName << "\" to an absolute path";
-		p_logProxy.push2log(__OS_FILE__, static_cast<uint32_t>(__LINE__), logger::Level::Error, t_stream.stream().str());
+		p_logProxy.push2log(__OS_FILE__, static_cast<uint32_t>(__LINE__), 0, logger::Level::Error, t_stream.stream().str());
 		return false;
 	}
 
@@ -261,7 +258,7 @@ bool PathFinder::load(const std::filesystem::path& p_fileName, Log_proxy& p_logP
 			const scef::Error_Context& t_error = pathFile.last_error();
 			logger::_p::LogStreamer t_stream;
 			format_SCEF_error(t_error, t_stream);
-			p_logProxy.push2log(filename_sv, static_cast<uint32_t>(t_error.line()), logger::Level::Error, t_stream.stream().str());
+			p_logProxy.push2log(filename_sv, static_cast<uint32_t>(t_error.line()), static_cast<uint32_t>(t_error.column()), logger::Level::Error, t_stream.stream().str());
 			return false;
 		}
 	}
@@ -283,11 +280,11 @@ bool PathFinder::load(const std::filesystem::path& p_fileName, Log_proxy& p_logP
 		if(root_group)
 		{
 			logger::_p::LogStreamer t_stream;
-			t_stream << "Column " << group.column()
-				<< ", Multiple \"pathfinder\" groups specified in file (previously defined in "
+			t_stream
+				<< "Multiple \"pathfinder\" groups specified in file (previously defined in "
 				<< root_group->line() << "," << root_group->column() << ')';
 
-			p_logProxy.push2log(filename_sv, static_cast<uint32_t>(group.line()), logger::Level::Warning, t_stream.stream().str());
+			p_logProxy.push2log(filename_sv, static_cast<uint32_t>(group.line()), static_cast<uint32_t>(group.column()), logger::Level::Warning, t_stream.stream().str());
 		}
 		root_group = &group;
 
@@ -307,7 +304,7 @@ bool PathFinder::load(const std::filesystem::path& p_fileName, Log_proxy& p_logP
 	{
 		logger::_p::LogStreamer t_stream;
 		t_stream << "No \"pathfinder\" group specified in file";
-		p_logProxy.push2log(filename_sv, 0, logger::Level::Error, t_stream.stream().str());
+		p_logProxy.push2log(filename_sv, 0, 0, logger::Level::Error, t_stream.stream().str());
 		return false;
 	}
 
@@ -319,9 +316,9 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 	if(!validateKey(p_key.name()))
 	{
 		logger::_p::LogStreamer t_stream;
-		t_stream << "Column " << p_key.column() << ", Invalid key \""
+		t_stream << "Invalid key \""
 			<< p_key.name_UTF8() << '\"';
-		p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Error, t_stream.stream().str());
+		p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column()), logger::Level::Error, t_stream.stream().str());
 		return;
 	}
 
@@ -339,9 +336,9 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 	if(m_pathTable.find(key) != m_pathTable.end())
 	{
 		logger::_p::LogStreamer t_stream;
-		t_stream << "Column " << p_key.column_value() << ", Key \""
+		t_stream << "Key \""
 			<< key << "\" already defined. Will be ignored!";
-		p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Warning, t_stream.stream().str());
+		p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Warning, t_stream.stream().str());
 		return;
 	}
 
@@ -350,8 +347,8 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 	if(path_sv.empty())
 	{
 		logger::_p::LogStreamer t_stream;
-		t_stream << "Column " << p_key.column_value() << ", invalid path \"" << key << "\"=(empty)";
-		p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Error, t_stream.stream().str());
+		t_stream << "Invalid path \"" << key << "\"=(empty)";
+		p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Error, t_stream.stream().str());
 		return;
 	}
 
@@ -369,8 +366,8 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 				if(tSequence.empty())
 				{
 					logger::_p::LogStreamer t_stream;
-					t_stream << "Column " << p_key.column_value() << ", invalid path element \"" << core::UCS4_to_UTF8(aux) << "\" in key \"" << key << "\"";
-					p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Error, t_stream.stream().str());
+					t_stream << "Invalid path element \"" << core::UCS4_to_UTF8(aux) << "\" in key \"" << key << "\"";
+					p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Error, t_stream.stream().str());
 					return;
 				}
 
@@ -384,8 +381,8 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 			if(pos == core::os_string_view::npos)
 			{
 				logger::_p::LogStreamer t_stream;
-				t_stream << "Column " << p_key.column_value() << ", bad environment delimiters in \"" << key << '\"';
-				p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Error, t_stream.stream().str());
+				t_stream << "Bad environment delimiters in \"" << key << '\"';
+				p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Error, t_stream.stream().str());
 				return;
 			}
 
@@ -404,8 +401,8 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 			if(tenvKey.empty())
 			{
 				logger::_p::LogStreamer t_stream;
-				t_stream << "Column " << p_key.column_value() << ", invalid environment variable \"" << core::UCS4_to_UTF8(aux) << "\" in key \"" << key << "\"";
-				p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Error, t_stream.stream().str());
+				t_stream << "Invalid environment variable \"" << core::UCS4_to_UTF8(aux) << "\" in key \"" << key << "\"";
+				p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Error, t_stream.stream().str());
 				return;
 			}
 
@@ -415,8 +412,8 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 				if(!res.has_value())
 				{
 					logger::_p::LogStreamer t_stream;
-					t_stream << "Column " << p_key.column_value() << ", environment variable \"" << core::UCS4_to_UTF8(aux) << "\" not found";
-					p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Warning, t_stream.stream().str());
+					t_stream << "Environment variable \"" << core::UCS4_to_UTF8(aux) << "\" not found";
+					p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Warning, t_stream.stream().str());
 					continue;
 				}
 
@@ -433,8 +430,8 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 			if(tSequence.empty())
 			{
 				logger::_p::LogStreamer t_stream;
-				t_stream << "Column " << p_key.column_value() << ", invalid path element \"" << core::UCS4_to_UTF8(path_sv) << "\" in key \"" << key << "\"";
-				p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), logger::Level::Error, t_stream.stream().str());
+				t_stream << "Invalid path element \"" << core::UCS4_to_UTF8(path_sv) << "\" in key \"" << key << "\"";
+				p_logProxy.push2log(p_fileName.native(), static_cast<uint32_t>(p_key.line()), static_cast<uint32_t>(p_key.column_value()), logger::Level::Error, t_stream.stream().str());
 				return;
 			}
 

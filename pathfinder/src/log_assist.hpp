@@ -39,23 +39,25 @@ namespace
 class Log_Assist
 {
 public:
-	inline Log_Assist(Log_proxy& p_proxy, core::os_string_view p_file, uint32_t p_line, logger::Level p_level)
+	inline Log_Assist(Log_proxy& p_proxy, core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level)
 		: p_proxy(p_proxy)
 		, m_file(p_file)
 		, m_line(p_line)
+		, m_column(p_column)
 		, m_level(p_level)
 	{
 	}
 
 	inline void operator = (const logger::_p::LogStreamer& p_streamer) const
 	{
-		p_proxy.push2log(m_file, m_line, m_level, p_streamer.stream().str());
+		p_proxy.push2log(m_file, m_line, m_column, m_level, p_streamer.stream().str());
 	}
 
 private:
 	Log_proxy& p_proxy;
 	core::os_string_view  m_file;
 	const uint32_t m_line;
+	const uint32_t m_column;
 	const logger::Level m_level;
 };
 
