@@ -220,6 +220,17 @@ static bool validateKey(std::u32string_view p_key)
 	return true;
 }
 
+
+static core::os_string convert_to_os(std::u32string_view p_str)
+{
+#ifdef _WIN32
+	std::u16string res = core::UCS4_to_UTF16(p_str).value();
+#else
+	std::u8string res = core::UCS4_to_UTF8(p_str);
+#endif
+	return core::os_string{reinterpret_cast<const core::os_char*>(res.data()), res.size()};
+}
+
 } //namespace
 
 
@@ -361,7 +372,7 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 			if(pos != 0)
 			{
 				std::u32string_view aux = path_sv.substr(0, pos);
-				core::os_string tSequence{aux};
+				core::os_string tSequence{convert_to_os(aux)};
 
 				if(tSequence.empty())
 				{
@@ -396,7 +407,7 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 				continue;
 			}
 
-			core::os_string tenvKey{aux};
+			core::os_string tenvKey{convert_to_os(aux)};
 
 			if(tenvKey.empty())
 			{
@@ -425,7 +436,7 @@ void PathFinder::validate_and_push(const scef::keyedValue& p_key, const std::fil
 		if(!path_sv.empty())
 		{
 
-			core::os_string tSequence{path_sv};
+			core::os_string tSequence{convert_to_os(path_sv)};
 
 			if(tSequence.empty())
 			{
