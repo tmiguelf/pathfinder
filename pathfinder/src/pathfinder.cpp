@@ -41,9 +41,9 @@
 
 
 #ifdef _WIN32
-#define __OS_FILE__ core::rvalue_reinterpret_cast<core::os_string_view>(std::wstring_view{__FILEW__})
+#define __OS_FILE__ std::wstring_view{__FILEW__}
 #else
-#define __OS_FILE__ core::rvalue_reinterpret_cast<core::os_string_view>(std::string_view{__FILE__})
+#define __OS_FILE__ std::string_view{__FILE__}
 #endif
 
 
