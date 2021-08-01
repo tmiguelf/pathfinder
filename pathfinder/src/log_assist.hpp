@@ -25,16 +25,16 @@
 
 #pragma once
 
-#include <Logger/log_streamer.hpp>
-#include <CoreLib/string/core_os_string.hpp>
+
+#include <CoreLib/toPrint/toPrint_sink.hpp>
+#include <CoreLib/toPrint/toPrint.hpp>
+
 #include "pathfinder/pathfinder_prelog_proxy.hpp"
 
 namespace pathfinder
 {
 
-namespace
-{
-class Log_Assist
+class Log_Assist: public core::sink_toPrint_base
 {
 public:
 	inline Log_Assist(Log_proxy& p_proxy, core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level)
@@ -46,9 +46,9 @@ public:
 	{
 	}
 
-	inline void operator = (const logger::_p::LogStreamer& p_streamer) const
+	void write(std::u8string_view p_message) const
 	{
-		p_proxy.push2log(m_file, m_line, m_column, m_level, p_streamer.stream().str());
+		p_proxy.push2log(m_file, m_line, m_column, m_level, p_message);
 	}
 
 private:
@@ -59,8 +59,8 @@ private:
 	const logger::Level m_level;
 };
 
-}
-
 } //namespace pathfinder
 
-#define PRELOG_CUSTOM(Proxy, File, Line, Level) Log_Assist{Proxy, File, Line, Level} = logger::_p::LogStreamer{}
+#define PRELOG_CUSTOM(Proxy, File, Line, Column, Level, ...) \
+	core_ToPrint(char8_t, Log_Assist(Proxy, File, Line, Column, Level), __VA_ARGS__)
+
