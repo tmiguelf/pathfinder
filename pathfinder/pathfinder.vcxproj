@@ -75,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources\dllVersion.rc">
-      <ExcludedFromBuild Condition="'TargetOS'!='Windows'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(TargetOS)'!='Windows'">true</ExcludedFromBuild>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
