@@ -445,7 +445,7 @@ bool PathFinder::load(const std::filesystem::path& p_fileName, Log_proxy& p_logP
 
 		scef::Error t_err = pathFile.load(
 			fileName,
-			scef::Flag::DisableComments | scef::Flag::DisableComments | scef::Flag::ForceHeader,
+			scef::Flag::DisableSpacers | scef::Flag::DisableComments | scef::Flag::ForceHeader,
 			SCEF_warning_callback, reinterpret_cast<void*>(&context));
 
 		if(t_err != scef::Error::None)
