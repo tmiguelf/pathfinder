@@ -55,7 +55,7 @@ public:
 
 public:
 	pathfinder_API Log_store();
-	void push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message) final;
+	pathfinder_API void push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message) final;
 
 public:
 	std::queue<data_t> m_data;
