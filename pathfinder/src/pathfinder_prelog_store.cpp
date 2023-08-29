@@ -27,6 +27,9 @@
 
 namespace pathfinder
 {
+
+Log_store::Log_store() = default;
+
 void Log_store::push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message)
 {
 	m_data.emplace(p_file, p_line, p_column, p_level, p_message);

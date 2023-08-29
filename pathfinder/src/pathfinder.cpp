@@ -351,21 +351,21 @@ namespace
 			}
 			else if(tchar < 0x00000800) //Level 1
 			{
-				*(p_output++) = static_cast<char>(tchar >> 6  ) | char{0xC0};
-				*(p_output++) = static_cast<char>(tchar & 0x3F) | char{0x80};
+				*(p_output++) = static_cast<char>(tchar >> 6  ) | static_cast<char>(0xC0);
+				*(p_output++) = static_cast<char>(tchar & 0x3F) | static_cast<char>(0x80);
 			}
 			else if(tchar < 0x00010000) //Level 2
 			{
-				*(p_output++) = static_cast<char>( tchar >> 12        ) | char{0xE0};
-				*(p_output++) = static_cast<char>((tchar >>  6) & 0x3F) | char{0x80};
-				*(p_output++) = static_cast<char>( tchar        & 0x3F) | char{0x80};
+				*(p_output++) = static_cast<char>( tchar >> 12        ) | static_cast<char>(0xE0);
+				*(p_output++) = static_cast<char>((tchar >>  6) & 0x3F) | static_cast<char>(0x80);
+				*(p_output++) = static_cast<char>( tchar        & 0x3F) | static_cast<char>(0x80);
 			}
 			else if(tchar < 0x00110000) //Level 3
 			{
-				*(p_output++) = static_cast<char>( tchar >> 18        ) | char{0xF0};
-				*(p_output++) = static_cast<char>((tchar >> 12) & 0x3F) | char{0x80};
-				*(p_output++) = static_cast<char>((tchar >>  6) & 0x3F) | char{0x80};
-				*(p_output++) = static_cast<char>( tchar        & 0x3F) | char{0x80};
+				*(p_output++) = static_cast<char>( tchar >> 18        ) | static_cast<char>(0xF0);
+				*(p_output++) = static_cast<char>((tchar >> 12) & 0x3F) | static_cast<char>(0x80);
+				*(p_output++) = static_cast<char>((tchar >>  6) & 0x3F) | static_cast<char>(0x80);
+				*(p_output++) = static_cast<char>( tchar        & 0x3F) | static_cast<char>(0x80);
 			}
 			else
 			{
@@ -383,13 +383,13 @@ namespace
 					{
 					case 3:
 						*(p_output++) =  static_cast<char>(tchar >> 16);
-						[[falltrough]];
+						[[fallthrough]];
 					case 2:
 						*(p_output++) =  static_cast<char>(tchar >>  8);
-						[[falltrough]];
+						[[fallthrough]];
 					case 1:
 						*(p_output++) =  static_cast<char>(tchar      );
-						[[falltrough]];
+						[[fallthrough]];
 					default:
 						break;
 					}

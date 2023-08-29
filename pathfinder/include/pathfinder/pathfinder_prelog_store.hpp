@@ -25,6 +25,7 @@
 
 #pragma once
 
+#include "pathfinder_api.h"
 #include "pathfinder_prelog_proxy.hpp"
 
 #include <queue>
@@ -53,6 +54,7 @@ public:
 	};
 
 public:
+	pathfinder_API Log_store();
 	void push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message) final;
 
 public:
