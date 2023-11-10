@@ -131,7 +131,7 @@ namespace
 			return 3;
 		}
 
-		inline void getPrint(char8_t* p_out) const
+		inline void get_print(char8_t* p_out) const
 		{
 			switch(m_data)
 			{
