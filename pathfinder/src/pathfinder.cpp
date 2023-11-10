@@ -175,7 +175,7 @@ namespace
 	{
 		if(p_error.error_code() == scef::Error::FileNotFound)
 		{
-			PRELOG_CUSTOM(p_log.logProxy, p_log.fileName,  static_cast<uint32_t>(p_error.line()), static_cast<uint32_t>(p_error.column()), logger::Level::Warning,
+			PRELOG_CUSTOM(p_log.logProxy, p_log.fileName,  static_cast<uint32_t>(p_error.line()), static_cast<uint32_t>(p_error.column()), logger::Level::Error,
 				"File not found."sv);
 			return;
 		}
@@ -426,7 +426,7 @@ bool PathFinder::load(const std::filesystem::path& p_fileName, Log_proxy& p_logP
 	std::error_code ec;
 	const std::filesystem::path& fileName =
 		input_absolute ?
-		p_fileName.parent_path() :
+		p_fileName :
 		std::filesystem::absolute(p_fileName, ec);
 
 	if(!input_absolute && ec != std::error_code{})
