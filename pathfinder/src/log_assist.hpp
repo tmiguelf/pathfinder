@@ -62,5 +62,5 @@ private:
 } //namespace pathfinder
 
 #define PRELOG_CUSTOM(Proxy, File, Line, Column, Level, ...) \
-	core_ToPrint(char8_t, Log_Assist(Proxy, File, Line, Column, Level), __VA_ARGS__)
+	core::print<char8_t>(Log_Assist(Proxy, File, Line, Column, Level) __VA_OPT__(,) __VA_ARGS__)
 

@@ -29,8 +29,8 @@
 #include <optional>
 #include <queue>
 
-#include <CoreLib/Core_Type.hpp>
-#include <CoreLib/Core_OS.hpp>
+#include <CoreLib/core_type.hpp>
+#include <CoreLib/core_os.hpp>
 #include <CoreLib/string/core_string_encoding.hpp>
 #include <CoreLib/toPrint/toPrint_encoders.hpp>
 #include <CoreLib/toPrint/toPrint_filesystem.hpp>
