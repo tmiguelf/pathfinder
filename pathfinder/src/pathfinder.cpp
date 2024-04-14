@@ -128,7 +128,7 @@ namespace
 
 			if(m_data < ' ' || m_data > 126)
 			{
-				return 2 + core::_p::to_chars_hex_estimate(static_cast<uint32_t>(m_data));
+				return 2 + core::to_chars_hex_size(static_cast<uint32_t>(m_data));
 			}
 			return 3;
 		}
@@ -157,7 +157,7 @@ namespace
 				{
 					*(p_out++) = u8'0';
 					*(p_out++) = u8'x';
-					core::_p::to_chars_hex_unsafe(static_cast<uint32_t>(m_data), p_out);
+					core::to_chars_hex_unsafe(static_cast<uint32_t>(m_data), p_out);
 				}
 				else
 				{
