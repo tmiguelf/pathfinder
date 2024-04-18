@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SCEF", "submodules\SCEF\SCE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreLib", "submodules\utilities\CoreLib\CoreLib.vcxproj", "{EA04E8E6-B05B-416E-B0A3-218406672173}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pathfinderLib", "pathfinderLib\pathfinderLib.vcxproj", "{2F47F5D8-F373-4162-BDB4-537630481954}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogLib", "submodules\Logger\LogLib\LogLib.vcxproj", "{8A84CFAF-D0D5-427A-B70E-84DD047D8575}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +85,26 @@ Global
 		{EA04E8E6-B05B-416E-B0A3-218406672173}.WSL_Release|x64.ActiveCfg = WSL_Release|x64
 		{EA04E8E6-B05B-416E-B0A3-218406672173}.WSL_Release|x64.Build.0 = WSL_Release|x64
 		{EA04E8E6-B05B-416E-B0A3-218406672173}.WSL_Release|x64.Deploy.0 = WSL_Release|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.Debug|x64.ActiveCfg = Debug|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.Debug|x64.Build.0 = Debug|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.Release|x64.ActiveCfg = Release|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.Release|x64.Build.0 = Release|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.WSL_Debug|x64.ActiveCfg = WSL_Debug|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.WSL_Debug|x64.Build.0 = WSL_Debug|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.WSL_Debug|x64.Deploy.0 = WSL_Debug|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.WSL_Release|x64.ActiveCfg = WSL_Release|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.WSL_Release|x64.Build.0 = WSL_Release|x64
+		{2F47F5D8-F373-4162-BDB4-537630481954}.WSL_Release|x64.Deploy.0 = WSL_Release|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.Debug|x64.ActiveCfg = Debug|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.Debug|x64.Build.0 = Debug|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.Release|x64.ActiveCfg = Release|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.Release|x64.Build.0 = Release|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.WSL_Debug|x64.ActiveCfg = WSL_Debug|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.WSL_Debug|x64.Build.0 = WSL_Debug|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.WSL_Debug|x64.Deploy.0 = WSL_Debug|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.WSL_Release|x64.ActiveCfg = WSL_Release|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.WSL_Release|x64.Build.0 = WSL_Release|x64
+		{8A84CFAF-D0D5-427A-B70E-84DD047D8575}.WSL_Release|x64.Deploy.0 = WSL_Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

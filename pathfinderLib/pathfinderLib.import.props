@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<ProjectReference Include="$(MSBuildThisFileDirectory)pathfinderLib.vcxproj">
+			<Project>{2f47f5d8-f373-4162-bdb4-537630481954}</Project>
+		</ProjectReference>
+	</ItemGroup>
+	<ImportGroup Label="PropertySheets">
+		<Import Project="$(MSBuildThisFileDirectory)pathfinderLib.include.props" />
+	</ImportGroup>
+</Project>

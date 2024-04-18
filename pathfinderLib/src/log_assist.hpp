@@ -25,17 +25,44 @@
 ///		SOFTWARE.
 //======== ======== ======== ======== ======== ======== ======== ========
 
-#include "pathfinder/pathfinder_prelog_store.hpp"
+#pragma once
+
+
+#include <CoreLib/toPrint/toPrint_sink.hpp>
+#include <CoreLib/toPrint/toPrint.hpp>
+
+#include <pathfinderLib/pathfinder_prelog_proxy.hpp>
 
 namespace pathfinder
 {
 
-Log_store::Log_store() = default;
-
-void Log_store::push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message)
+class Log_Assist: public core::sink_toPrint_base
 {
-	m_data.emplace(p_file, p_line, p_column, p_level, p_message);
-}
+public:
+	inline Log_Assist(Log_proxy& p_proxy, core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level)
+		: m_proxy(p_proxy)
+		, m_file(p_file)
+		, m_line(p_line)
+		, m_column(p_column)
+		, m_level(p_level)
+	{
+	}
 
-}
+	void write(std::u8string_view p_message) const
+	{
+		m_proxy.push2log(m_file, m_line, m_column, m_level, p_message);
+	}
+
+private:
+	Log_proxy&           m_proxy;
+	core::os_string_view m_file;
+	uint32_t      const  m_line;
+	uint32_t      const  m_column;
+	logger::Level const  m_level;
+};
+
+} //namespace pathfinder
+
+#define PRELOG_CUSTOM(Proxy, File, Line, Column, Level, ...) \
+	core::print<char8_t>(Log_Assist(Proxy, File, Line, Column, Level) __VA_OPT__(,) __VA_ARGS__)
 
