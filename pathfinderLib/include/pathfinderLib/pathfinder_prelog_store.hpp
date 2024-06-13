@@ -27,19 +27,40 @@
 
 #pragma once
 
-#include <string_view>
+#include "pathfinder_prelog_proxy.hpp"
 
-#include <CoreLib/string/core_os_string.hpp>
-#include <Logger/log_level.hpp>
-
+#include <queue>
 
 namespace pathfinder
 {
 
-class Log_proxy
+class Log_store: public Log_proxy
 {
 public:
-	virtual void push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message) = 0;
+	struct data_t
+	{
+		core::os_string	file;
+		uint32_t		line;
+		uint32_t		column;
+		logger::Level	level;
+		std::u8string	message;
+
+		data_t(core::os_string_view const p_file, uint32_t const p_line, uint32_t const p_column, logger::Level const p_level, std::u8string_view const p_message)
+			: file   {p_file}
+			, line   {p_line}
+			, column {p_column}
+			, level  {p_level}
+			, message{p_message}
+		{}
+	};
+
+public:
+	Log_store();
+	void push2log(core::os_string_view p_file, uint32_t p_line, uint32_t p_column, logger::Level p_level, std::u8string_view p_message) final;
+
+public:
+	std::queue<data_t> m_data;
 };
 
 } //namespace pathfinder
+

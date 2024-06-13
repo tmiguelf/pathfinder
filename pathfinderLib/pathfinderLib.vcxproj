@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{29c53dbe-0e88-4b00-82f3-3dd88d0fb128}</ProjectGuid>
+    <ProjectGuid>{2f47f5d8-f373-4162-bdb4-537630481954}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -42,41 +42,34 @@
     <UseDebugLibraries>false</UseDebugLibraries>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)locations.props" />
     <Import Project="$(quickMSBuildPath)default.cpp.props" />
-    <Import Project="$(versionPath)version.include.props" />
     <Import Project="$(LogLibPath)LogLib.include.props" />
     <Import Project="$(SCEFPath)SCEF.import.props" />
     <Import Project="$(CoreLibPath)CoreLib.import.props" />
-    <Import Project="$(pathfinderLibPath)pathfinderLib.import.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>_pathfinder_EXPORTS_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="pathfinderLib.import.props" />
+    <None Include="pathfinderLib.include.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\pathfinderLib\pathfinder.hpp" />
+    <ClInclude Include="include\pathfinderLib\pathfinder_prelog_proxy.hpp" />
+    <ClInclude Include="include\pathfinderLib\pathfinder_prelog_store.hpp" />
+    <ClInclude Include="src\log_assist.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\pathfinder.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\pathfinder\pathfinder.hpp" />
-    <ClInclude Include="include\pathfinder\pathfinder_api.h" />
-    <ClInclude Include="include\pathfinder\pathfinder_service.hpp" />
-    <ClInclude Include="resources\versionSpecific.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="resources\dllVersion.rc">
-      <ExcludedFromBuild Condition="'$(TargetOS)'!='Windows'">true</ExcludedFromBuild>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="pathfinder.import.props" />
-    <None Include="pathfinder.include.props" />
+    <ClCompile Include="src\pathfinder_prelog_store.cpp" />
   </ItemGroup>
   <Import Project="$(quickMSBuildPath)default.cpp.targets" />
 </Project>

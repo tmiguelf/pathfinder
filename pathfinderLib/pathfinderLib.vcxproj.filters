@@ -18,35 +18,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="pathfinder.include.props">
+    <None Include="pathfinderLib.include.props">
       <Filter>Export</Filter>
     </None>
-    <None Include="pathfinder.import.props">
+    <None Include="pathfinderLib.import.props">
       <Filter>Export</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resources\versionSpecific.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\pathfinder\pathfinder.hpp">
+    <ClInclude Include="include\pathfinderLib\pathfinder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\pathfinder\pathfinder_api.h">
+    <ClInclude Include="include\pathfinderLib\pathfinder_prelog_proxy.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\pathfinder\pathfinder_service.hpp">
+    <ClInclude Include="include\pathfinderLib\pathfinder_prelog_store.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\log_assist.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pathfinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="resources\dllVersion.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClCompile Include="src\pathfinder_prelog_store.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

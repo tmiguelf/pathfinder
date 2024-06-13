@@ -25,30 +25,41 @@
 ///		SOFTWARE.
 //======== ======== ======== ======== ======== ======== ======== ========
 
-#include <pathfinder/pathfinder.hpp>
-#include <pathfinder/pathfinder_service.hpp>
-#include <pathfinderLib/pathfinder.hpp>
+#pragma once
 
+#include <map>
+#include <filesystem>
+#include <string>
+#include <string_view>
+
+#include "pathfinder_prelog_proxy.hpp"
+
+namespace scef
+{
+	class keyedValue;
+}
+
+/// \n
 namespace pathfinder
 {
-namespace
-{
-	static PathFinder g_instance;
-}
 
-pathfinder_API const std::filesystem::path& path_find(std::u8string_view p_category)
-{
-	return g_instance.get_path(p_category);
-}
+	/*template<typename T1, typename T2>
+	inline constexpr bool less(T1 const& p_1, T2 const& p_2) { return p_1 < p_2; }*/
 
-pathfinder_API bool load_pathfinder(const std::filesystem::path& p_file, Log_proxy& p_logHandler)
-{
-	return g_instance.load(p_file, p_logHandler);
-}
+	class PathFinder
+	{
+	public:
 
-pathfinder_API void clear_pathfinder()
-{
-	g_instance.clear();
-}
+		bool load(std::filesystem::path const& p_fileName, Log_proxy& p_logProxy);
+		inline void clear() { m_pathTable.clear(); }
+		std::filesystem::path const& get_path(std::u8string_view p_name) const;
+
+	private:
+		void validate_and_push(scef::keyedValue const& p_key, std::filesystem::path const& p_directory, Log_proxy& p_logProxy, std::filesystem::path const& p_fileName);
+
+		using pathTable_t = std::map<std::u8string, std::filesystem::path const, std::less<>>;
+		pathTable_t m_pathTable;
+		std::filesystem::path const emptyPath;
+	};
 
 } //namespace pathfinder
