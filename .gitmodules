@@ -1,20 +1,30 @@
+[submodule "submodules/quick_cmake"]
+	path = submodules/quick_cmake
+	url = ../tmiguelf/quick_cmake.git
+	fetchRecurseSubmodules = false
+	ignore = dirty
 [submodule "submodules/quickMSBuild"]
 	path = submodules/quickMSBuild
 	url = ../quickMSBuild.git
+	fetchRecurseSubmodules = false
 	ignore = dirty
 [submodule "submodules/utilities"]
 	path = submodules/utilities
 	url = ../utilities.git
+	fetchRecurseSubmodules = false
 	ignore = dirty
 [submodule "submodules/SCEF"]
 	path = submodules/SCEF
 	url = ../SCEF.git
+	fetchRecurseSubmodules = false
 	ignore = dirty
 [submodule "submodules/Logger"]
 	path = submodules/Logger
 	url = ../Logger.git
+	fetchRecurseSubmodules = false
 	ignore = dirty
 [submodule "submodules/googletest"]
 	path = submodules/googletest
 	url = https://github.com/tmiguelf/googletest.git
+	fetchRecurseSubmodules = false
 	ignore = dirty

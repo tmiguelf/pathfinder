@@ -25,4 +25,4 @@
 ///		SOFTWARE.
 //======== ======== ======== ======== ======== ======== ======== ========
 
-#include <version.rc>
+#include <version/version.rc>

@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "PathFinder_API.h"
+#include "pathfinder_api.h"
 
 #include <filesystem>
 #include <string_view>
